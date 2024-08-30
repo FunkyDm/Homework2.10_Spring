@@ -11,18 +11,20 @@ import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private final List<Integer> productList = new ArrayList<>();
+    private final ShoppingCart shoppingCart;
 
-    @Override
-    public ShoppingCart add(List<Integer> itemsList) {
-        ShoppingCart shoppingCart = new ShoppingCart(itemsList);
-        productList.addAll(itemsList);
-        return shoppingCart;
+    public ShoppingCartServiceImpl(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     @Override
-    public Collection<Integer> get() {
-        return Collections.unmodifiableCollection(productList);
+    public List<Long> add(List<Long> itemsIds) {
+        return shoppingCart.addItemsToCart(itemsIds);
+    }
+
+    @Override
+    public Collection<Long> get() {
+        return shoppingCart.getItemsFromCart();
     }
 
 }

@@ -4,8 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.HomeworkShoppingCart.model.ShoppingCart;
-import pro.sky.HomeworkShoppingCart.service.impl.ShoppingCartServiceImpl;
+import pro.sky.HomeworkShoppingCart.service.ShoppingCartService;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,19 +12,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/order")
 public class ShoppingCartController {
-    private final ShoppingCartServiceImpl shoppingCartServiceImpl;
+    private final ShoppingCartService shoppingCartServiceImpl;
 
-    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartServiceImpl) {
+    public ShoppingCartController(ShoppingCartService shoppingCartServiceImpl) {
         this.shoppingCartServiceImpl = shoppingCartServiceImpl;
     }
 
     @GetMapping("/add")
-    public ShoppingCart add(@RequestParam(value = "id") List<Integer> itemsList){
-        return shoppingCartServiceImpl.add(itemsList);
+    public List<Long> add(@RequestParam(value = "id") List<Long> itemsIds) {
+        return shoppingCartServiceImpl.add(itemsIds);
     }
 
     @GetMapping("/get")
-    public Collection<Integer> get(){
+    public Collection<Long> get() {
         return shoppingCartServiceImpl.get();
     }
 

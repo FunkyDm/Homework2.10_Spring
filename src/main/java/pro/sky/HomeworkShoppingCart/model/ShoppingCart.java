@@ -1,24 +1,33 @@
 package pro.sky.HomeworkShoppingCart.model;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+@Component
+@SessionScope
 public class ShoppingCart {
-    private final List<Integer> itemsIdList;
+    private final List<Long> itemsList;
 
-    public ShoppingCart(List<Integer> itemsIdList) {
-        this.itemsIdList = itemsIdList;
+    public ShoppingCart(List<Long> itemsList) {
+        this.itemsList = itemsList;
     }
 
-    public List<Integer> getItemsIdList() {
-        return itemsIdList;
+    public List<Long> getItemsList() {
+        return itemsList;
     }
 
-    @Override
-    public String toString() {
-        return "ShoppingCart{" +
-                "itemsIdList=" + itemsIdList +
-                '}';
+    public List<Long> addItemsToCart(List<Long> items){
+        itemsList.addAll(items);
+        return itemsList;
+    }
+
+    public Collection<Long> getItemsFromCart(){
+        return Collections.unmodifiableCollection(itemsList);
     }
 
     @Override
@@ -26,11 +35,20 @@ public class ShoppingCart {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ShoppingCart that = (ShoppingCart) o;
-        return Objects.equals(itemsIdList, that.itemsIdList);
+        return Objects.equals(itemsList, that.itemsList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(itemsIdList);
+        return Objects.hashCode(itemsList);
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "itemsList=" + itemsList +
+                '}';
+    }
+
 }
+
